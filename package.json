@@ -1,0 +1,44 @@
+{
+  "name": "swiftapi",
+  "version": "1.0.0",
+  "description": "Taylor Swift Albums API",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "nodemon index.ts",
+    "build":"tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ana María Velázquez",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.14.0",
+    "@types/mongoose": "^5.11.97",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.6.2",
+    "mongoose": "^8.4.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.7",
+    "prisma": "^5.14.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.7.5",
+    "@types/nodemon": "^1.19.6",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
