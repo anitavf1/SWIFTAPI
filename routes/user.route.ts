@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createUser, loginUser, getUserInfo, deleteUser} from '../Controllers/user.controller';
+import { createUser, loginUser, getUserInfo, deleteUser, updateProperties, getUsers} from '../Controllers/user.controller';
 import { authMiddleware } from '../Middleware/AuthMiddleware';
 
 
@@ -204,5 +204,159 @@ router.post('/login', loginUser as any);
 
 
 router.get('/me', authMiddleware as any, getUserInfo as any);
+
+/**
+ * @swagger
+ * /updateProperties:
+ *   put:
+ *     summary: Update user properties
+ *     description: Update specific properties of a user by their ID. You can send any property in the request body, and only those will be updated.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user to update.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 
+ *               email:
+ *                 type: string
+ *                 
+ *               password:
+ *                 type: string
+ *                
+ *               role:
+ *                 type: string
+ *                 example: admin
+ *               isActive:
+ *                 type: boolean
+ *                 example: true
+ *             description: Properties of the user to update. You can send one or multiple fields.
+ *     responses:
+ *       200:
+ *         description: User updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   
+ *                 name:
+ *                   type: string
+ *                   
+ *                 email:
+ *                   type: string
+ *                   
+ *                 role:
+ *                   type: string
+ *                   example: admin
+ *                 isActive:
+ *                   type: boolean
+ *                   example: true
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User not found
+ *       500:
+ *         description: Server error, something went wrong while updating the user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Server error
+ */
+
+router.patch('/updateProperties', updateProperties)
+
+/**
+ * @swagger
+ * /getUsers:
+ *   get:
+ *     summary: Get users with pagination and charge filter
+ *     description: Retrieve a paginated list of users filtered by their charge. You can specify the page, limit, and charge in the query parameters.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: The page number to retrieve.
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: The number of users per page.
+ *       - in: query
+ *         name: charge
+ *         schema:
+ *           type: string
+ *           example: manager
+ *         description: Filter users by their charge (role or position).
+ *     responses:
+ *       200:
+ *         description: A list of users filtered by charge and paginated.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 users:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         
+ *                       name:
+ *                         type: string
+ *                         
+ *                       email:
+ *                         type: string
+ *                         
+ *                       charge:
+ *                         type: string
+ *                        
+ *                       isActive:
+ *                         type: boolean
+ *                         
+ *       500:
+ *         description: Server error, something went wrong while retrieving the users.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 err:
+ *                   type: string
+ *                   example: Server error
+ */
+
+router.get('/getUsers', getUsers as any)
 
 export default router;

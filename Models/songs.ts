@@ -13,7 +13,7 @@ const SongSchema: Schema = new Schema({
   album: { type: String, required: true },
   compositor: { type: String, required: true },
   lyricist: { type: String, required: true },
-  producer: { type: Number, required: true }
+  producer: { type: String, required: true }
 });
 
 export default mongoose.model<ISong>("Song", SongSchema);

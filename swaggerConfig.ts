@@ -25,8 +25,6 @@ const options: OAS3Options = {
 
 const swaggerSpec = swaggerJSDoc(options);
 
-//apis: ['./src/routes/*.ts']
-
 const app = express();
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

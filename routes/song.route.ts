@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createSong,deleteSong, getSongDetails, updateSong} from '../Controllers/song.controller';
+import { getSongs, getSongById, createSong, deleteSong, updateSong, updateProperties, deleteAll, createMultipleSongs } from '../Controllers/song.controller';
 import { authMiddleware } from '../Middleware/AuthMiddleware';
 
 
@@ -108,7 +108,7 @@ router.post('/createSong', createSong);
  *                  
  */
 
-router.post('/deleteSong', deleteSong as any);
+router.delete('/deleteSong/:id', deleteSong);
 
 /**
  * @swagger
@@ -194,11 +194,11 @@ router.post('/deleteSong', deleteSong as any);
  *                  
  */
 
-router.post('/updateSong', updateSong as any);
+router.put('/update/:id', updateSong);
 
 /**
  * @swagger
- * /getSongDetails:
+ * /getSongById/:id:
  *   get:
  *     summary: Get song details
  *     description: Retrieves the details of a song by its ID.
@@ -272,6 +272,100 @@ router.post('/updateSong', updateSong as any);
  */
 
 
-router.post('/getSongDetails', getSongDetails as any);
+router.get('/getSongById/:id', getSongById as any);
+router.get('/all', getSongs as any);
+
+/**
+ * @swagger
+ * '/updateProperties/:id':
+ *   put:
+ *     summary: Update song properties
+ *     description: Update specific properties of a song by its ID. You can send any property in the request body, and only those will be updated.
+ *     tags:
+ *       - Songs
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the song to update.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: Willow
+ *               artist:
+ *                 type: string
+ *                 example: Taylor Swift
+ *               album:
+ *                 type: string
+ *                 example: Evermore
+ *               releaseDate:
+ *                 type: string
+ *                 format: date
+ *                 example: 2020-12-11
+ *               duration:
+ *                 type: string
+ *                 example: "03:34"
+ *             description: Properties of the song to update. You can send one or multiple fields.
+ *     responses:
+ *       200:
+ *         description: Song updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   example: 60d21b4967d0d8992e610c85
+ *                 title:
+ *                   type: string
+ *                   example: Willow
+ *                 artist:
+ *                   type: string
+ *                   example: Taylor Swift
+ *                 album:
+ *                   type: string
+ *                   example: Evermore
+ *                 releaseDate:
+ *                   type: string
+ *                   format: date
+ *                   example: 2020-12-11
+ *                 duration:
+ *                   type: string
+ *                   example: "03:34"
+ *       404:
+ *         description: Song not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Song not found
+ *       500:
+ *         description: Server error, something went wrong while updating the song.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Server error
+ */
+router.patch('/updateProperties/:id', updateProperties);
+
+router.post('/multiple', createMultipleSongs);
+
+router.delete('deleteAll', deleteAll);
 
 export default router;
